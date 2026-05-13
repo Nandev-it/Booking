@@ -25,8 +25,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Login
+// Login & Register
 Route::get('/login', [LoginController::class, 'showLoginForm']);
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
 Route::post('/user_login', [AuthController::class, 'login']);
 Route::post('/user_register', [AuthController::class, 'register']);
 
@@ -99,9 +102,11 @@ Route::get('/set-language-get', function (Request $request) {
 // routes/web.php
 Route::get('/search', [SearchController::class, 'index']);
 Route::get('/movies/search', [MovieController::class, 'search']);
-
+Route::get('/', [MovieController::class, 'index']);
 Route::get('/movies', [MovieController::class, 'index']);
 Route::get('/movies/{id}', [MovieController::class, 'show']);
+
+Route::get('/movies/filter', [MovieController::class, 'filter']);
 
 
 // routes/web.php

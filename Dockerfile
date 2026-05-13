@@ -3,8 +3,14 @@ FROM php:8.3-cli
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    zip \
+    curl \
+    libzip-dev \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    && docker-php-ext-install \
+    pdo \
+    pdo_pgsql \
+    zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -12,7 +18,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 EXPOSE 10000
 
